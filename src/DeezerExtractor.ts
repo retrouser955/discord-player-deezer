@@ -21,10 +21,6 @@ export default class DeezerExtractor extends BaseExtractor {
     };
 
     public async activate(): Promise<void> {
-        this.deezerRegex.track = /(^https:)\/\/(www\.)?deezer.com\/([a-zA-Z]+\/)?track\/[0-9]+/
-        this.deezerRegex.playlistNalbums = /(^https:)\/\/(www\.)?deezer.com\/[a-zA-Z]+\/(playlist|album)\/[0-9]+(\?)?(.*)/
-        this.deezerRegex.share = /(^https:)\/\/deezer\.page\.link\/[A-Za-z0-9]+/
-
         const { stream: ytdlStream } = await loadYtdl()
 
         this._stream = ytdlStream
