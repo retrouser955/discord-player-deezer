@@ -1,0 +1,27 @@
+{
+  "name": "discord-player-deezer",
+  "version": "0.0.1",
+  "description": "A custom extractor made for discord-player that enables you to extract from Deezer.",
+  "main": "dist/DeezerExtractor.js",
+  "author": "retro_ig",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@discord-player/extractor": "^4.1.1",
+    "@mithron/deezer-music-metadata": "^1.0.3",
+    "discord-player": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "youtube-sr": "^4.3.4",
+    "ytdl-core": "^4.11.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4",
+    "tslint": "^6.1.3",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "build": "npm run lint && tsc && npm run format",
+    "format": "prettier --write \"dist/*.js\"",
+    "lint": "tslint -p tsconfig.json"
+  }
+}
