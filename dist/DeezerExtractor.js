@@ -1,4 +1,3 @@
-// THIS IS A COMPILED FILE! DO NOT MAKE ANY CHANGES TO THIS
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 const discord_player_1 = require('discord-player');
@@ -15,9 +14,6 @@ class DeezerExtractor extends discord_player_1.BaseExtractor {
     };
   }
   async activate() {
-    this.deezerRegex.track = /(^https:)\/\/(www\.)?deezer.com\/([a-zA-Z]+\/)?track\/[0-9]+/;
-    this.deezerRegex.playlistNalbums = /(^https:)\/\/(www\.)?deezer.com\/[a-zA-Z]+\/(playlist|album)\/[0-9]+(\?)?(.*)/;
-    this.deezerRegex.share = /(^https:)\/\/deezer\.page\.link\/[A-Za-z0-9]+/;
     const { stream: ytdlStream } = await (0, extractor_1.loadYtdl)();
     this._stream = ytdlStream;
   }

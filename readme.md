@@ -5,12 +5,10 @@ Discord Player Deezer Extractor. An unofficial extractor made for discord-player
 ## Installing the extractor
 
 ```bash
-npm install https://github.com/retrouser955/discord-player-deezer.git
+npm install discord-player-deezer
 # or
-yarn add https://github.com/retrouser955/discord-player-deezer.git
+yarn add discord-player-deezer
 ```
-
-*note: I will put the extractor on npm once I am done with the package!*
 
 ## Loading the extractor
 
