@@ -29,10 +29,10 @@ export default class DeezerExtractor extends BaseExtractor {
     public async validate(query: string, _type?: SearchQueryType | null | undefined): Promise<boolean> {
         if (typeof query !== "string") return false
 
-        return this.deezerRegex.track.test(query) || this.deezerRegex.playlistNalbums.test(query)
+        return this.deezerRegex.track.test(query) || this.deezerRegex.playlistNalbums.test(query) || this.deezerRegex.share.test(query)
     }
 
-    public async handle(query: string, _context: ExtractorSearchContext): Promise<ExtractorInfo> {
+    public async handle(query: string, context: ExtractorSearchContext): Promise<ExtractorInfo> {
         const data = await getData(query)
 
         if (data?.type === "song") {
@@ -48,7 +48,8 @@ export default class DeezerExtractor extends BaseExtractor {
                         source: "arbitrary",
                         thumbnail: data.thumbnail[0].url,
                         duration: Util.buildTimeCode(Util.parseMS(data.duration * 1000)),
-                        views: 0
+                        views: 0,
+                        requestedBy: context.requestedBy
                     })
                 ]
             }
@@ -86,7 +87,8 @@ export default class DeezerExtractor extends BaseExtractor {
                     source: "arbitrary",
                     thumbnail: track.thumbnail[0].url,
                     duration: Util.buildTimeCode(Util.parseMS(track.duration * 1000)),
-                    views: 0
+                    views: 0,
+                    requestedBy: context.requestedBy
                 })
             })
 

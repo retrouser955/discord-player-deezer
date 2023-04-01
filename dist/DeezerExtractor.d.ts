@@ -7,6 +7,6 @@ export default class DeezerExtractor extends BaseExtractor {
     private deezerRegex;
     activate(): Promise<void>;
     validate(query: string, _type?: SearchQueryType | null | undefined): Promise<boolean>;
-    handle(query: string, _context: ExtractorSearchContext): Promise<ExtractorInfo>;
+    handle(query: string, context: ExtractorSearchContext): Promise<ExtractorInfo>;
     stream(info: Track): Promise<string | Readable>;
 }

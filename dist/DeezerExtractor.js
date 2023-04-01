@@ -19,9 +19,13 @@ class DeezerExtractor extends discord_player_1.BaseExtractor {
   }
   async validate(query, _type) {
     if (typeof query !== 'string') return false;
-    return this.deezerRegex.track.test(query) || this.deezerRegex.playlistNalbums.test(query);
+    return (
+      this.deezerRegex.track.test(query) ||
+      this.deezerRegex.playlistNalbums.test(query) ||
+      this.deezerRegex.share.test(query)
+    );
   }
-  async handle(query, _context) {
+  async handle(query, context) {
     const data = await (0, deezer_music_metadata_1.getData)(query);
     if (data?.type === 'song') {
       const returnData = {
@@ -37,6 +41,7 @@ class DeezerExtractor extends discord_player_1.BaseExtractor {
             thumbnail: data.thumbnail[0].url,
             duration: discord_player_1.Util.buildTimeCode(discord_player_1.Util.parseMS(data.duration * 1000)),
             views: 0,
+            requestedBy: context.requestedBy,
           }),
         ],
       };
@@ -71,6 +76,7 @@ class DeezerExtractor extends discord_player_1.BaseExtractor {
           thumbnail: track.thumbnail[0].url,
           duration: discord_player_1.Util.buildTimeCode(discord_player_1.Util.parseMS(track.duration * 1000)),
           views: 0,
+          requestedBy: context.requestedBy,
         });
       });
       playlist.tracks = tracks;
