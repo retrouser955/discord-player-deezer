@@ -12,8 +12,27 @@ yarn add discord-player-deezer
 
 ## Loading the extractor
 
+### CJS
 ```js
-const DeezerExtractor = require("discord-player-deezer")
+const DeezerExtractor = require("discord-player-deezer").default // or const { default: DeezerExtractor } = require("discord-player-deezer")
+const player = getMainPlayerSomehow()
+
+player.extractors.register(DeezerExtractor)
+```
+
+### ESM
+```js
+import { default as DeezerExtractor } from "discord-player-deezer"
+
+const player = getMainPlayerSomehow()
+
+player.extractors.register(DeezerExtractor)
+```
+
+### Typescript
+```ts
+import DeezerExtractor from "discord-player-deezer"
+
 const player = getMainPlayerSomehow()
 
 player.extractors.register(DeezerExtractor)
