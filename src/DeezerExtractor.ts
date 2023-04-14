@@ -2,7 +2,7 @@ import { BaseExtractor, ExtractorInfo, ExtractorSearchContext, Playlist, SearchQ
 import { getData } from "@mithron/deezer-music-metadata"
 import { YouTube } from "youtube-sr";
 import { Readable } from "stream";
-import { StreamFN, loadYtdl } from "@discord-player/extractor"
+import { stream } from "yt-stream";
 
 interface DeezerRegex {
     track: RegExp; 
@@ -12,19 +12,13 @@ interface DeezerRegex {
 
 export default class DeezerExtractor extends BaseExtractor {
     public static identifier: string = "com.discord-player.deezerextractor" as const
-    private _stream!: StreamFN
+    private _stream = stream
 
     private deezerRegex: DeezerRegex = {
         track: /(^https:)\/\/(www\.)?deezer.com\/([a-zA-Z]+\/)?track\/[0-9]+/,
         playlistNalbums: /(^https:)\/\/(www\.)?deezer.com\/[a-zA-Z]+\/(playlist|album)\/[0-9]+(\?)?(.*)/,
         share: /(^https:)\/\/deezer\.page\.link\/[A-Za-z0-9]+/
     };
-
-    public async activate(): Promise<void> {
-        const { stream: ytdlStream } = await loadYtdl()
-
-        this._stream = ytdlStream
-    }
 
     public async validate(query: string, _type?: SearchQueryType | null | undefined): Promise<boolean> {
         if (typeof query !== "string") return false
@@ -113,9 +107,13 @@ export default class DeezerExtractor extends BaseExtractor {
                 type: "video"
             })
 
-            const stream = await this._stream(serachResults[0].url)
+            const stream = await this._stream(serachResults[0].url, {
+                quality: 'high',
+                type: 'audio',
+                highWaterMark: 1048576 * 32
+            })
 
-            return stream
+            return stream.url
         } catch (error) {
             throw(error)
         }
