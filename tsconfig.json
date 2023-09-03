@@ -1,5 +1,5 @@
 {
     "extends": "./discord-player-ts.base.json",
-    "include": ["./**/*.ts"],
+    "include": ["./src/*.ts"],
     "exclude": ["dist/*.ts"]
 }

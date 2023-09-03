@@ -23,15 +23,20 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@discord-player/equalizer@*":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@discord-player/equalizer/-/equalizer-0.2.0.tgz#dbeb86893dace3a7909e77b9bab997e0be5472cd"
-  integrity sha512-4wJws2PhAaKGxLmFeBWUyxsOMVYLQUX6iwtilV0caXJAgV/lWTQHsdKCIdh7fv0ProFLumDkIS/v9Jwtq1BIJw==
+"@discord-player/equalizer@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@discord-player/equalizer/-/equalizer-0.2.2.tgz#94c6309c62517da591c9cdc0a776d80b5aa523cf"
+  integrity sha512-U86em1cMtopXVuKFDxP8J2DcNOqwCAsYQ2tkzPoJvchsrezcI2cgvN3jtGt9FFECP3pLvSz96ZB9FOHZKG5Mqg==
 
-"@discord-player/utils@*":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@discord-player/utils/-/utils-0.2.0.tgz#e8100a919a13826c66e1c7c8b988aeda295bb4ef"
-  integrity sha512-12SQWg7tgQT9S2jaLwG53JuNF/d7tPynnty+fN8lMQOnEfh3CQJZGqMW521gVekxzraa+N+QV/azlwg8vMcuVA==
+"@discord-player/ffmpeg@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@discord-player/ffmpeg/-/ffmpeg-0.1.0.tgz#3c8f1fc7dfdb033dc8ecd18a9e82fde2a3867196"
+  integrity sha512-0kW6q4gMQN2B4Z4EzmUgXrKQSXXmyhjdZBBZ/6jSHZ9fh814oOu+JXP01VvtWHwTylI7qJHIctEWtSyjEubCJg==
+
+"@discord-player/utils@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@discord-player/utils/-/utils-0.2.2.tgz#ece599124472ea8a5fc28e81adaee38cf4ad5a0c"
+  integrity sha512-UklWUT7BcZEkBgywM9Cmpo2nwj3SQ9Wmhu6ml1uy/YRQnY8IRdZEHD84T2kfjOg4LVZek0ej1VerIqq7a9PAHQ==
   dependencies:
     "@discordjs/collection" "^1.1.0"
 
@@ -120,6 +125,13 @@ builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
   integrity sha512-wxXCdllwGhI2kCC0MnvTGYTMvnVZTvqgypkiTI8Pa5tcz2i6VqsqwYGgqwXji+4RgCzms6EajE4IxiUH6HH8nQ==
+
+busboy@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/busboy/-/busboy-1.6.0.tgz#966ea36a9502e43cdb9146962523b92f531f6893"
+  integrity sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==
+  dependencies:
+    streamsearch "^1.1.0"
 
 chalk@^2.0.0, chalk@^2.3.0:
   version "2.4.2"
@@ -215,13 +227,14 @@ discord-api-types@^0.37.20:
   resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.37.35.tgz#d0dad0bce7ce5bffc633030f17464e45148d9f28"
   integrity sha512-iyKZ/82k7FX3lcmHiAvvWu5TmyfVo78RtghBV/YsehK6CID83k5SI03DKKopBcln+TiEIYw5MGgq7SJXSpNzMg==
 
-discord-player@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/discord-player/-/discord-player-6.0.0.tgz#deabea12ce147ef6cf29651a30f3897f85b63559"
-  integrity sha512-IN1BkILYFvyLkqEyaNAmLARy9aU74mdBrArjCdgHHYWGthMQfii/dRKrkdsNrpUYMcMJemQUdwjDSaaNHjqhMA==
+discord-player@*:
+  version "6.6.2"
+  resolved "https://registry.npmjs.org/discord-player/-/discord-player-6.6.2.tgz#2e82b28f5098f9eef3570aeaa7bdefd518b098bb"
+  integrity sha512-+hX+6r6K/kQZ0Ip8vxWpIC3zMZDdUFvlc4pqytO4LcGFrcqRM/Mba59o/fWP34tp4H3bB3wDo5LpKQfsKCjsPg==
   dependencies:
-    "@discord-player/equalizer" "*"
-    "@discord-player/utils" "*"
+    "@discord-player/equalizer" "^0.2.2"
+    "@discord-player/ffmpeg" "^0.1.0"
+    "@discord-player/utils" "^0.2.2"
     "@discordjs/voice" latest
     libsodium-wrappers "^0.7.10"
 
@@ -467,10 +480,22 @@ semver@^5.3.0:
   resolved "https://registry.npmjs.org/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
+soundcloud.ts@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.npmjs.org/soundcloud.ts/-/soundcloud.ts-0.5.2.tgz#60660b889afb31c0e504f089002228fbf576b298"
+  integrity sha512-/pc72HWYJpSpup+mJBE9pT31JsrMcxJGBlip3Vem+0Fsscg98xh1/7I2nCpAKuMAeV6MVyrisI8TfjO6T7qKJg==
+  dependencies:
+    undici "^5.22.1"
+
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
+
+streamsearch@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/streamsearch/-/streamsearch-1.1.0.tgz#404dd1e2247ca94af554e841a8ef0eaa238da764"
+  integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
 supports-color@^5.3.0:
   version "5.5.0"
@@ -529,6 +554,13 @@ typescript@^4.9.5:
   version "4.9.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+
+undici@^5.22.1:
+  version "5.23.0"
+  resolved "https://registry.npmjs.org/undici/-/undici-5.23.0.tgz#e7bdb0ed42cebe7b7aca87ced53e6eaafb8f8ca0"
+  integrity sha512-1D7w+fvRsqlQ9GscLBwcAJinqcZGHUKjbOmXdlE/v8BvEGXjeWAax+341q44EuTcHXXnfyKNbKRq4Lg7OzhMmg==
+  dependencies:
+    busboy "^1.6.0"
 
 wrappy@1:
   version "1.0.2"

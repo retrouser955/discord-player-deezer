@@ -3,6 +3,16 @@ import { getData } from "@mithron/deezer-music-metadata"
 import { YouTube } from "youtube-sr";
 import { Readable } from "stream";
 import { stream } from "yt-stream";
+import { default as SoundCloud } from "soundcloud.ts"
+
+interface DeezerOptions {
+    bridgeFrom?: "YouTube" | "SoundCloud",
+    soundcloud?: {
+        clientId?: string;
+        oauthToken?: string;
+        proxy?: string;
+    }
+}
 
 interface DeezerRegex {
     track: RegExp; 
@@ -10,15 +20,24 @@ interface DeezerRegex {
     share: RegExp
 }
 
-export default class DeezerExtractor extends BaseExtractor {
+export default class DeezerExtractor extends BaseExtractor<DeezerOptions> {
     public static identifier: string = "com.discord-player.deezerextractor" as const
     private _stream = stream
+    client = new SoundCloud({
+        clientId: this.options.soundcloud?.clientId,
+        oauthToken: this.options.soundcloud?.oauthToken,
+        proxy: this.options.soundcloud?.proxy
+    })
 
     private deezerRegex: DeezerRegex = {
         track: /(^https:)\/\/(www\.)?deezer.com\/([a-zA-Z]+\/)?track\/[0-9]+/,
         playlistNalbums: /(^https:)\/\/(www\.)?deezer.com\/[a-zA-Z]+\/(playlist|album)\/[0-9]+(\?)?(.*)/,
         share: /(^https:)\/\/deezer\.page\.link\/[A-Za-z0-9]+/
     };
+
+    async activate(): Promise<void> {
+        if(!this.options.bridgeFrom) this.options.bridgeFrom === "YouTube"
+    }
 
     public async validate(query: string, _type?: SearchQueryType | null | undefined): Promise<boolean> {
         if (typeof query !== "string") return false
@@ -97,25 +116,40 @@ export default class DeezerExtractor extends BaseExtractor {
         return { playlist: null, tracks: [] }
     }
 
-    public async stream(info: Track): Promise<string | Readable> {
+    public async brdgeProvider(track: Track) {
+        const query = this.createBridgeQuery(track)
 
-        try {
-            const searchQuery: string = `${info.author} - ${info.title} audio`
-
-            const serachResults = await YouTube.search(searchQuery, {
-                limit: 1,
-                type: "video"
-            })
-
-            const stream = await this._stream(serachResults[0].url, {
-                quality: 'high',
-                type: 'audio',
-                highWaterMark: 1048576 * 32
-            })
-
-            return stream.url
-        } catch (error) {
-            throw(error)
+        if(this.options.bridgeFrom === "YouTube") {
+            try {    
+                const serachResults = await YouTube.search(query, {
+                    limit: 1,
+                    type: "video"
+                })
+    
+                const stream = await this._stream(serachResults[0].url, {
+                    quality: 'high',
+                    type: 'audio',
+                    highWaterMark: 1048576 * 32
+                })
+    
+                return stream.url
+            } catch (error) {
+                throw(`Could not find a source to bridge from. The error is as follows.\n\n${error}`)
+            }
         }
+
+        const res = await this.client.tracks.searchV2({
+            q: query
+        })
+
+        if(res.collection.length === 0) throw new Error("Could not find a suitable source to stream from.")
+
+        const stream = this.client.util.streamLink(res.collection[0].permalink_url)
+
+        return stream
+    }
+
+    public async stream(info: Track): Promise<string | Readable> {
+        return this.brdgeProvider(info)
     }
 }
