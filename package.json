@@ -1,6 +1,6 @@
 {
   "name": "discord-player-deezer",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A custom extractor made for discord-player that enables you to extract from Deezer.",
   "main": "dist/DeezerExtractor.js",
   "author": "retro_ig",
@@ -20,7 +20,6 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "postinstall": "node build.js",
     "build": "npm run lint && tsc && npm run format",
     "format": "prettier --write \"dist/*.js\"",
     "lint": "tslint -p tsconfig.json",

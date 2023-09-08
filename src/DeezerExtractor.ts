@@ -11,7 +11,8 @@ interface DeezerOptions {
         clientId?: string;
         oauthToken?: string;
         proxy?: string;
-    }
+    };
+    onBeforeCreateStream?: (track: Track) => Promise<string | Readable>
 }
 
 interface DeezerRegex {
@@ -35,7 +36,8 @@ export default class DeezerExtractor extends BaseExtractor<DeezerOptions> {
         share: /(^https:)\/\/deezer\.page\.link\/[A-Za-z0-9]+/
     };
 
-    async activate(): Promise<void> {
+    public async activate(): Promise<void> {
+        /* tslint:disable-next-line */
         if(!this.options.bridgeFrom) this.options.bridgeFrom === "YouTube"
     }
 
@@ -126,15 +128,15 @@ export default class DeezerExtractor extends BaseExtractor<DeezerOptions> {
                     type: "video"
                 })
     
-                const stream = await this._stream(serachResults[0].url, {
+                const ytStream = await this._stream(serachResults[0].url, {
                     quality: 'high',
                     type: 'audio',
                     highWaterMark: 1048576 * 32
                 })
     
-                return stream.url
+                return ytStream.url
             } catch (error) {
-                throw(`Could not find a source to bridge from. The error is as follows.\n\n${error}`)
+                throw new Error(`Could not find a source to bridge from. The error is as follows.\n\n${error}`)
             }
         }
 
@@ -144,12 +146,16 @@ export default class DeezerExtractor extends BaseExtractor<DeezerOptions> {
 
         if(res.collection.length === 0) throw new Error("Could not find a suitable source to stream from.")
 
-        const stream = this.client.util.streamLink(res.collection[0].permalink_url)
+        const str = this.client.util.streamLink(res.collection[0].permalink_url)
 
-        return stream
+        return str
     }
 
     public async stream(info: Track): Promise<string | Readable> {
+        if(this.options.onBeforeCreateStream && typeof this.options.onBeforeCreateStream === "function") {
+            return await this.options.onBeforeCreateStream(info)
+        }
+
         return this.brdgeProvider(info)
     }
 }
