@@ -48,6 +48,12 @@ export default class DeezerExtractor extends BaseExtractor<DeezerOptions> {
     }
 
     public async handle(query: string, context: ExtractorSearchContext): Promise<ExtractorInfo> {
+        if(this.deezerRegex.share.test(query)) {
+            const fetchRes = await fetch(query)
+
+            query = fetchRes.url.split("?")[0]
+        }
+
         const data = await getData(query)
 
         if (data?.type === "song") {

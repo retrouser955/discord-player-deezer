@@ -1,12 +1,13 @@
 {
   "name": "discord-player-deezer",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "A custom extractor made for discord-player that enables you to extract from Deezer.",
   "main": "dist/DeezerExtractor.js",
   "author": "retro_ig",
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@discord-player/extractor": "^4.4.4",
     "@mithron/deezer-music-metadata": "^1.0.3",
     "discord-player": "*",
     "soundcloud.ts": "^0.5.2",

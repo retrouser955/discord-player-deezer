@@ -38,6 +38,10 @@ class DeezerExtractor extends discord_player_1.BaseExtractor {
     );
   }
   async handle(query, context) {
+    if (this.deezerRegex.share.test(query)) {
+      const fetchRes = await fetch(query);
+      query = fetchRes.url.split('?')[0];
+    }
     const data = await (0, deezer_music_metadata_1.getData)(query);
     if (data?.type === 'song') {
       const returnData = {
