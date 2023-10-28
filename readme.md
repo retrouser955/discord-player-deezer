@@ -1,3 +1,7 @@
+# CODEBASE MOVED
+
+https://github.com/discord-player/deezer-extractor
+
 # Discord Player Deezer Extractor
 
 Discord Player Deezer Extractor. An unofficial extractor made for discord-player for **Deezer** support. Deezer extractor works by either making a request to the Deezer API or extracting metadata from the Deezer site. Because we cannot get streams from deezer itself, the extractor uses the extracted data to stream from youtube!
